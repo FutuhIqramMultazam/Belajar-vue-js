@@ -1,47 +1,64 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from "vue";
+
+const count = ref(0);
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <div>
+      <h1>Counter</h1>
+      <span id="value">{{ count }}</span>
+      <div>
+        <button @click="count--" id="kurang">-</button>
+        <button @click="count++" id="tambah">+</button>
+      </div>
+    </div>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+main {
+  text-align: center;
+  padding: 50px;
+  background-color: #04637e;
+  border-radius: 8px;
+}
+#value {
+  font-size: 50px;
+}
+button {
+  font-size: 20px;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin: 0 5px;
+  transition: 250ms;
+  cursor: pointer;
+  color: white;
+}
+button:hover {
+  scale: 1.2;
+}
+button:active {
+  animation: pulse 0.5s linear;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+#kurang {
+  background-color: #b22121;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+#tambah {
+  background-color: #037e03;
 }
 </style>
