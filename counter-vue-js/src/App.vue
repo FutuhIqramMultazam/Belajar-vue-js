@@ -1,17 +1,23 @@
 <script>
+import { ref } from "vue";
+
 export default {
-  data() {
+  setup() {
+    const count = ref(0);
+
+    function tambah() {
+      count.value++;
+    }
+
+    function kurang() {
+      count.value--;
+    }
+
     return {
-      count: 1,
+      count,
+      tambah,
+      kurang,
     };
-  },
-  methods: {
-    tambah() {
-      this.count++;
-    },
-    kurang() {
-      this.count--;
-    },
   },
 };
 </script>
