@@ -1,6 +1,31 @@
 <script setup>
 import { ref } from "vue";
 const showFrom = ref(false);
+const newMemo = ref("");
+const memos = ref([]);
+const errorMessage = ref("");
+
+function addMemo() {
+  if (!newMemo.value) {
+    errorMessage.value = "Tidak boleh kosong";
+    return;
+  } else {
+    errorMessage.value = "";
+  }
+  memos.value.push({
+    id: Date.now(),
+    memo: newMemo.value,
+    date: new Date().toLocaleDateString("id-ID"),
+    backgroundColor: getRandomColors(),
+  });
+
+  newMemo.value = "";
+  showFrom.value = false;
+}
+
+function getRandomColors() {
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}
 </script>
 
 <template>
@@ -11,37 +36,23 @@ const showFrom = ref(false);
         <button @click="showFrom = true">+</button>
       </header>
       <div class="card-container">
-        <div class="card">
+        <!-- card sticky notes -->
+        <div v-for="(memo, index) in memos" :key="index" class="card" :style="{ backgroundColor: memo.backgroundColor }">
           <p class="card-content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. In veritatis aliquam unde eveniet, mollitia natus ut eius quae doloremque? Cumque asperiores voluptatum quibusdam impedit unde iure ullam quod amet vitae.
+            {{ memo.memo }}
           </p>
-          <p class="card-date">12/12/2024</p>
-        </div>
-        <div class="card">
-          <p class="card-content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. In veritatis aliquam unde eveniet, mollitia natus ut eius quae doloremque? Cumque asperiores voluptatum quibusdam impedit unde iure ullam quod amet vitae.
-          </p>
-          <p class="card-date">12/12/2024</p>
-        </div>
-        <div class="card">
-          <p class="card-content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. In veritatis aliquam unde eveniet, mollitia natus ut eius quae doloremque? Cumque asperiores voluptatum quibusdam impedit unde iure ullam quod amet vitae.
-          </p>
-          <p class="card-date">12/12/2024</p>
-        </div>
-        <div class="card">
-          <p class="card-content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. In veritatis aliquam unde eveniet, mollitia natus ut eius quae doloremque? Cumque asperiores voluptatum quibusdam impedit unde iure ullam quod amet vitae.
-          </p>
-          <p class="card-date">12/12/2024</p>
+          <p class="card-date">{{ memo.date }}</p>
         </div>
       </div>
     </div>
+
+    <!-- modals -->
     <div v-show="showFrom" class="form-overlay">
       <div class="form-modal">
         <button @click="showFrom = false" class="form-close-btn">&times;</button>
-        <textarea name="memo" id="memo" cols="30" rows="10"></textarea>
-        <button class="form-save-btn">Save</button>
+        <p v-if="errorMessage" style="color: red">{{ errorMessage }}</p>
+        <textarea v-model="newMemo" name="memo" id="memo" cols="30" rows="10"></textarea>
+        <button @click="addMemo" class="form-save-btn">Save</button>
       </div>
     </div>
   </main>
@@ -51,6 +62,7 @@ const showFrom = ref(false);
 main {
   height: 100vh;
   width: 100vw;
+  background-color: #6882ad;
 }
 
 .container {

@@ -1,25 +1,15 @@
-<script>
+<script setup>
 import { ref } from "vue";
 
-export default {
-  setup() {
-    const count = ref(0);
+const count = ref(0);
 
-    function tambah() {
-      count.value++;
-    }
+function tambah() {
+  count.value++;
+}
 
-    function kurang() {
-      count.value--;
-    }
-
-    return {
-      count,
-      tambah,
-      kurang,
-    };
-  },
-};
+function kurang() {
+  count.value--;
+}
 </script>
 
 <template>
