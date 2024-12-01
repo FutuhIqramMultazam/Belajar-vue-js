@@ -1,7 +1,19 @@
-<script setup>
-import { ref } from "vue";
-
-const count = ref(0);
+<script>
+export default {
+  data() {
+    return {
+      count: 1,
+    };
+  },
+  methods: {
+    tambah() {
+      this.count++;
+    },
+    kurang() {
+      this.count--;
+    },
+  },
+};
 </script>
 
 <template>
@@ -10,8 +22,8 @@ const count = ref(0);
       <h1>Counter</h1>
       <span id="value">{{ count }}</span>
       <div>
-        <button @click="count--" id="kurang">-</button>
-        <button @click="count++" id="tambah">+</button>
+        <button @click="kurang" id="kurang">-</button>
+        <button @click="tambah" id="tambah">+</button>
       </div>
     </div>
   </main>
@@ -23,6 +35,7 @@ main {
   padding: 50px;
   background-color: #04637e;
   border-radius: 8px;
+  width: 200px;
 }
 #value {
   font-size: 50px;
