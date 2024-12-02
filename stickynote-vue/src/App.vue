@@ -23,6 +23,10 @@ function addMemo() {
   showFrom.value = false;
 }
 
+function deleteMemo(id) {
+  memos.value = memos.value.filter((memo) => memo.id !== id);
+}
+
 function getRandomColors() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
@@ -37,11 +41,14 @@ function getRandomColors() {
       </header>
       <div class="card-container">
         <!-- card sticky notes -->
-        <div v-for="(memo, index) in memos" :key="index" class="card" :style="{ backgroundColor: memo.backgroundColor }">
+        <div class="card" v-for="(memo, index) in memos" :key="index" :style="{ backgroundColor: memo.backgroundColor }">
           <p class="card-content">
             {{ memo.memo }}
           </p>
-          <p class="card-date">{{ memo.date }}</p>
+          <div class="card-footer">
+            <p class="card-date">{{ memo.date }}</p>
+            <button @click="deleteMemo(memo.id)">Hapus</button>
+          </div>
         </div>
       </div>
     </div>
@@ -110,6 +117,12 @@ header button {
   flex-direction: column;
   border-radius: 10px;
   justify-content: space-between;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .form-overlay {
