@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import srcQuiz from "./data/quizes.json";
+import QuizCard from "./components/QuizCard.vue";
 
 const quizes = ref(srcQuiz);
 const search = ref("");
@@ -28,14 +29,15 @@ watch(search, () => {
       <h1 id="title">Quiz Vue</h1>
       <input v-model.trim="search" type="text" id="search-input" />
     </header>
-    <section id="quize-container">
-      <div v-for="quize in quizes" :key="quize.id" class="card">
-        <img :src="quize.img" :alt="quize.title" />
+    <section id="quiz-container">
+      <!-- <div v-for="quiz in quizes" :key="quiz.id" class="card">
+        <img :src="quiz.img" :alt="quiz.title" />
         <div class="card-body">
-          <h2>{{ quize.title }}</h2>
-          <p>{{ quize.questions.length }} Questions</p>
+          <h2>{{ quiz.title }}</h2>
+          <p>{{ quiz.questions.length }} Questions</p>
         </div>
-      </div>
+      </div> -->
+      <QuizCard v-for="quiz in quizes" :key="quiz.id" />
     </section>
   </main>
 </template>
@@ -65,33 +67,9 @@ header {
   border-radius: 5px;
 }
 
-#quize-container {
+#quiz-container {
   display: flex;
   flex-wrap: wrap;
   margin-top: 20px;
-}
-
-.card {
-  width: 270px;
-  margin-right: 30px;
-  margin-bottom: 30px;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  margin: 0;
-}
-
-.card-body {
-  padding: 20px;
-}
-
-.card-body h2 {
-  font-weight: bold;
 }
 </style>
